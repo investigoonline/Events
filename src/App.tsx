@@ -24,25 +24,24 @@ const judges = [
     bio: 'Senthil Kumar has more than 20 years of experience building enterprise technology businesses across SAP, cloud, data, and industry transformation. His approach is grounded in efficiency before hype. He focuses on technology that reduces manual work, shortens cycle times, improves control, and makes business processes easier to run. Under his leadership, Sierra Digital has developed 43+ AI agents and established the Sierra Digital AppHaus in Houston.',
      img: '/RSK - CEO.jpg',
   },
-  {
-    name: 'Sandra Ochoa',
-    title: 'Angel Investor & Serial Entrepreneur',
-    bio: 'Sandra founded and scaled three companies in healthcare tech before pivoting to angel investing. She mentors diverse founders across the Southwest.',
-    img: 'https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=400',
+   {
+    name: 'Pratyush Kumar',
+    title: 'Founder, FusionStak',
+    bio: 'Two-time founder with a successful exit, now General Manager of CloudGavel at Tyler Technologies. Built FusionStak into a 100-person company and created the largest electronic warrant system in the U.S., serving 250+ law enforcement agencies and 100+ courts. Active investor in founders building mission-critical software for regulated industries.',
+    img: '/Pratush_FusionStak.jpg',
   },
   {
-    name: 'James Whitfield',
-    title: 'General Partner, TX Capital Partners',
-    bio: 'James oversees a $500M growth-equity portfolio and has backed 40+ startups in fintech, agritech, and clean energy throughout the Lone Star State.',
-    img: 'https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=400',
+    name: 'Anuj Shah',
+    title: 'Business Leader',
+    bio: 'Anuj Shah, a successful entrepreneur and business leader with extensive experience building and scaling businesses. Having successfully managed large logistics and distribution network operations, Anuj brings valuable insights into leadership, growth strategy, and operational excellence. We are honored to have him share his perspective with our community of investors, founders, and business leaders.',
+    img: '/dummy1.png',
   },
   {
-    name: 'Priya Chandrasekaran',
-    title: 'Founder, Austin Innovation Lab',
+    name: 'John Doe',
+    title: 'Founder',
     bio: 'Priya built the region\'s top startup accelerator, having mentored over 200 founders. She brings a global network and deep operational expertise to every pitch.',
-    img: 'https://images.pexels.com/photos/3756678/pexels-photo-3756678.jpeg?auto=compress&cs=tinysrgb&w=400',
-  },
-];
+    img: '/dummy1.png',
+  },];
 
 const features = [
   {
