@@ -37,9 +37,9 @@ const judges = [
     img: '/dummy1.png',
   },
   {
-    name: 'John Doe',
-    title: 'Founder',
-    bio: 'Priya built the region\'s top startup accelerator, having mentored over 200 founders. She brings a global network and deep operational expertise to every pitch.',
+    // name: 'John Doe',
+    // title: 'Founder',
+    // bio: 'Priya built the region\'s top startup accelerator, having mentored over 200 founders. She brings a global network and deep operational expertise to every pitch.',
     img: '/dummy1.png',
   },];
 
