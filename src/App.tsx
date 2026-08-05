@@ -36,12 +36,13 @@ const judges = [
     bio: 'Anuj Shah, a successful entrepreneur and business leader with extensive experience building and scaling businesses. Having successfully managed large logistics and distribution network operations, Anuj brings valuable insights into leadership, growth strategy, and operational excellence. We are honored to have him share his perspective with our community of investors, founders, and business leaders.',
     img: '/dummy1.png',
   },
-  {
-    // name: 'John Doe',
-    // title: 'Founder',
-    // bio: 'Priya built the region\'s top startup accelerator, having mentored over 200 founders. She brings a global network and deep operational expertise to every pitch.',
-    img: '/dummy1.png',
-  },];
+ {
+     name: 'Suresh Katamreddy',
+     title: 'Co-Founder & CEO, Kastech Software Solutions Group',
+     bio: 'Suresh Katamreddy is the Co-Founder & CEO of Kastech Software Solutions Group, a global technology services organization specializing in ERP, cloud, AI, cybersecurity, and digital transformation. With over 20 years of industry leadership, he has built and scaled technology businesses serving clients worldwide. As an active investor and mentor, Suresh supports innovative startups and growth-stage companies, particularly in enterprise software, AI, cloud technologies, and digital transformation initiatives.',
+    img: '/suresh_kastech.png',
+  },
+];
 
 const features = [
   {
