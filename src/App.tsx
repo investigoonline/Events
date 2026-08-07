@@ -216,7 +216,7 @@ export default function App() {
                       <img
                         src="/tie_logo.png"
                         alt="TiE"
-                        className="h-10 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
+                        className="h-14 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
                       />
                     </a>
                      <a
@@ -227,7 +227,7 @@ export default function App() {
                       <img
                         src="/chamber_logo.png"
                         alt="Chamber"
-                        className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
+                        className="h-14 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
                       />
                     </a>
 
@@ -239,7 +239,7 @@ export default function App() {
                       <img
                         src="/score_logo.png"
                         alt="Score"
-                        className="h-10 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
+                        className="h-14 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
                       />
                     </a>
                   </div>
@@ -265,7 +265,7 @@ export default function App() {
                       <img
                         src="/logo_celersoft.png"
                         alt="Celersoft"
-                        className="h-10 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
+                        className="h-14 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
                       />
                     </a>
 
