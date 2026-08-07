@@ -219,6 +219,17 @@ export default function App() {
                         className="h-10 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
                       />
                     </a>
+                     <a
+                      href="/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src="/chamber_logo.png"
+                        alt="Chamber"
+                        className="h-20 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
+                      />
+                    </a>
 
                     <a
                       href="https://www.score.org//"
@@ -291,6 +302,11 @@ export default function App() {
                 alt="TiE"
                 className="h-12 w-28 object-contain"
               />
+              <img
+      src="/chamber_logo.png"
+      alt="Chamber"
+      className="h-16 w-auto object-contain"
+    />
 
               <img
                 src="/score_logo.png"
