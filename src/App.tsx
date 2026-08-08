@@ -330,6 +330,16 @@ export default function App() {
 
         </div>
 
+      <div
+  className={`overflow-hidden transition-all duration-300 ${
+    navScrolled ? "max-h-0 opacity-0" : "max-h-7 opacity-100"
+  }`}
+>
+  <div className="bg-amber-600 text-navy-950 text-center py-1.5 font-medium text-xs md:text-sm">
+    📢 <strong>Application Deadline: September 5, 2026</strong>
+  </div>
+</div>
+
         {/* Mobile Drawer */}
 
         {mobileOpen && (
