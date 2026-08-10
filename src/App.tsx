@@ -596,14 +596,14 @@ export default function App() {
                   className="group relative bg-white/5 border border-white/10 hover:border-amber-500/40 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10"
                   style={{ transitionDelay: `${i * 80}ms` }}
                 >
-                  <div className="relative h-64 overflow-hidden">
-                    <img
-                      src={judge.img}
-                      alt={judge.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent" />
-                  </div>
+                <div className="relative h-[340px] md:h-64 overflow-hidden">
+  <img
+    src={judge.img}
+    alt={judge.name}
+    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent" />
+</div>
                   <div className="p-5">
                     <h3 className="font-display text-lg font-bold text-white">{judge.name}</h3>
                     <p className="text-amber-400 text-xs font-medium mt-1">{judge.title}</p>
