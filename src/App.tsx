@@ -34,7 +34,7 @@ const judges = [
     name: 'Anuj Shah',
     title: 'Business Leader',
     bio: 'Anuj Shah, a successful entrepreneur and business leader with extensive experience building and scaling businesses. Having successfully managed large logistics and distribution network operations, Anuj brings valuable insights into leadership, growth strategy, and operational excellence. We are honored to have him share his perspective with our community of investors, founders, and business leaders.',
-    img: '/dummy1.png',
+    img: '/anuj1.jpeg',
   },
  {
      name: 'Suresh Katamreddy',
