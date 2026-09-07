@@ -22,9 +22,9 @@ const judges = [
     name: 'Senthil Kumar ',
     title: 'Chairman and CEO, Sierra Digital',
     bio: 'Senthil Kumar has more than 20 years of experience building enterprise technology businesses across SAP, cloud, data, and industry transformation. His approach is grounded in efficiency before hype. He focuses on technology that reduces manual work, shortens cycle times, improves control, and makes business processes easier to run. Under his leadership, Sierra Digital has developed 43+ AI agents and established the Sierra Digital AppHaus in Houston.',
-     img: '/RSK - CEO.jpg',
+    img: '/RSK - CEO.jpg',
   },
-   {
+  {
     name: 'Pratyush Kumar',
     title: 'Founder, FusionStak',
     bio: 'Two-time founder with a successful exit, now General Manager of CloudGavel at Tyler Technologies. Built FusionStak into a 100-person company and created the largest electronic warrant system in the U.S., serving 250+ law enforcement agencies and 100+ courts. Active investor in founders building mission-critical software for regulated industries.',
@@ -32,14 +32,14 @@ const judges = [
   },
   {
     name: 'Anuj Shah',
-    title: 'Successful Entrepreneur, Business Leader',
+    title: 'Business Leader',
     bio: 'Anuj Shah, a successful entrepreneur and business leader with extensive experience building and scaling businesses. Having successfully managed large logistics and distribution network operations, Anuj brings valuable insights into leadership, growth strategy, and operational excellence. We are honored to have him share his perspective with our community of investors, founders, and business leaders.',
     img: '/anuj1.jpeg',
   },
- {
-     name: 'Suresh Katamreddy',
-     title: 'Co-Founder & CEO, Kastech Software Solutions Group',
-     bio: 'Suresh Katamreddy is the Co-Founder & CEO of Kastech Software Solutions Group, a global technology services organization specializing in ERP, cloud, AI, cybersecurity, and digital transformation. With over 20 years of industry leadership, he has built and scaled technology businesses serving clients worldwide. As an active investor and mentor, Suresh supports innovative startups and growth-stage companies, particularly in enterprise software, AI, cloud technologies, and digital transformation initiatives.',
+  {
+    name: 'Suresh Katamreddy',
+    title: 'Co-Founder & CEO, Kastech Software Solutions Group',
+    bio: 'Suresh Katamreddy is the Co-Founder & CEO of Kastech Software Solutions Group, a global technology services organization specializing in ERP, cloud, AI, cybersecurity, and digital transformation. With over 20 years of industry leadership, he has built and scaled technology businesses serving clients worldwide. As an active investor and mentor, Suresh supports innovative startups and growth-stage companies, particularly in enterprise software, AI, cloud technologies, and digital transformation initiatives.',
     img: '/suresh_kastech.png',
   },
 ];
@@ -80,6 +80,7 @@ export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeBio, setActiveBio] = useState<number | null>(null);
   const [applyOpen, setApplyOpen] = useState(false);
+  const [applicationsClosed, setApplicationsClosed] = useState(false);
   const [reportsOpen, setReportsOpen] = useState(false);
 
   useEffect(() => {
@@ -105,10 +106,10 @@ export default function App() {
       />
 
       {/* ── NAV ── */}
-    <header
+      <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navScrolled
-            ? "bg-navy-950 shadow-2xl"
-            : "bg-navy-950/90 backdrop-blur-md"
+          ? "bg-navy-950 shadow-2xl"
+          : "bg-navy-950/90 backdrop-blur-md"
           }`}
       >
 
@@ -166,7 +167,8 @@ export default function App() {
           <div className="flex justify-end items-center gap-4">
 
             <button
-              onClick={() => setApplyOpen(true)}
+              // onClick={() => setApplyOpen(true)}
+              onClick={() => setApplicationsClosed(true)}
               className="hidden lg:inline-flex px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-navy-950 rounded-full font-semibold text-sm transition-all"
             >
               Apply Now
@@ -219,7 +221,7 @@ export default function App() {
                         className="h-14 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
                       />
                     </a>
-                     <a
+                    <a
                       href="/"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -230,6 +232,7 @@ export default function App() {
                         className="h-14 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
                       />
                     </a>
+
 
                     <a
                       href="https://www.score.org//"
@@ -284,12 +287,11 @@ export default function App() {
 
         {/* <div className="lg:hidden border-t border-white/10 py-4 px-4"> */}
         <div
-  className={`lg:hidden border-t px-4 overflow-hidden transition-all duration-300 ${
-    navScrolled
-      ? "max-h-0 opacity-0 py-0 border-transparent"
-      : "max-h-72 opacity-100 py-4 border-white/10"
-  }`}
->
+          className={`lg:hidden border-t px-4 overflow-hidden transition-all duration-300 ${navScrolled
+            ? "max-h-0 opacity-0 py-0 border-transparent"
+            : "max-h-72 opacity-100 py-4 border-white/10"
+            }`}
+        >
 
           <div className="text-center mb-4">
             <p className="text-[11px] uppercase tracking-[0.3em] text-amber-400 mb-3">
@@ -303,16 +305,17 @@ export default function App() {
                 className="h-12 w-28 object-contain"
               />
               <img
-      src="/chamber_logo.png"
-      alt="Chamber"
-      className="h-16 w-auto object-contain"
-    />
-
+                src="/chamber_logo.png"
+                alt="Chamber"
+                className="h-16 w-auto object-contain"
+              />
               <img
                 src="/score_logo.png"
                 alt="SCORE"
                 className="h-10 w-24 object-contain"
               />
+
+
             </div>
           </div>
 
@@ -330,16 +333,27 @@ export default function App() {
 
         </div>
 
-      <div
+
+        {/* ----------- Announcement Bar ----------- */}
+
+        {/* <div
   className={`overflow-hidden transition-all duration-300 ${
-    navScrolled ? "max-h-0 opacity-0" : "max-h-7 opacity-100"
+    navScrolled ? "max-h-0 opacity-0" : "max-h-10 opacity-100"
   }`}
 >
-  <div className="bg-amber-600 text-navy-950 text-center py-1.5 font-medium text-xs md:text-sm">
-    📢 <strong>Application Deadline: September 5, 2026</strong>
+  <div className="bg-amber-500 text-navy-950 text-center py-2 font-semibold text-sm">
+    📢 Applications close on <strong>September 5, 2026</strong>. Apply before the deadline.
   </div>
-</div>
+</div> */}
 
+        <div
+          className={`overflow-hidden transition-all duration-300 ${navScrolled ? "max-h-0 opacity-0" : "max-h-7 opacity-100"
+            }`}
+        >
+          <div className="bg-amber-600 text-navy-950 text-center py-1.5 font-medium text-xs md:text-sm">
+            📢 <strong>Application Deadline: September 5, 2026</strong>
+          </div>
+        </div>
         {/* Mobile Drawer */}
 
         {mobileOpen && (
@@ -362,7 +376,7 @@ export default function App() {
             <button
               className="text-amber-400 font-semibold"
               onClick={() => {
-                setApplyOpen(true);
+                setApplicationsClosed(true);
                 setMobileOpen(false);
               }}
             >
@@ -375,11 +389,19 @@ export default function App() {
 
       </header>
 
+
+
+
+
       {/* ── HERO ── */}
+
       <section
+
         id="about"
         className="relative min-h-screen pt-[170px] flex flex-col items-center justify-center text-center overflow-hidden"
       >
+
+
         {/* Background */}
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -394,8 +416,8 @@ export default function App() {
         <div
           ref={heroSection.ref}
           className={`relative z-10 max-w-4xl mx-auto px-6 pt-8 space-y-6 transition-all duration-700 ${heroSection.inView
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 translate-y-8'
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-8'
             }`}
         >
           <div className=" mt-16 inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/40 rounded-full text-amber-300 text-sm font-medium mb-2">
@@ -442,25 +464,26 @@ export default function App() {
 
           <div className="flex flex-wrap justify-center gap-4 pt-4 -translate-y-6">
             <button
-              onClick={() => setApplyOpen(true)}
+              // onClick={() => setApplyOpen(true)}
+              onClick={() => setApplicationsClosed(true)}
               className="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold text-sm rounded-full transition-all duration-200 hover:shadow-xl hover:shadow-amber-500/40 hover:-translate-y-0.5 inline-flex items-center gap-2"
             >
               Apply to Pitch <ArrowRight className="w-4 h-4" />
             </button>
-            {/* <a
-              href="https://www.zeffy.com/en-US/ticketing/loons-lair-2026-audience-tickets"
+            <a
+              href="https://connect.intuit.com/pay/Investigo/scs-v1-496ce6cf3a904c1280ea33efc8011f296e9a17a9c3c746d2b06b6caca9600b1de04397566d854ec1a6c1df057791e930?locale=EN_US&cta=saveandcopylink"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
             >
               Buy Tickets
-            </a> */}
-            {/*<a
+            </a>
+            {/* <a
               href="/tickets"
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
             >
               Buy Tickets
-            </a>*/}
+            </a> */}
             <a
               href="#sponsor"
               className="px-8 py-3.5 bg-transparent hover:bg-white/10 border border-amber-500/50 text-amber-400 font-semibold text-sm rounded-full transition-all duration-200"
@@ -468,12 +491,12 @@ export default function App() {
               Become a Sponsor
             </a>
 
-            {/* <button
+            <button
               onClick={() => setReportsOpen(true)}
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm inline-flex items-center gap-2"
             >
               <FileText className="w-4 h-4" /> Reports
-            </button> */}
+            </button>
           </div>
         </div>
 
@@ -511,7 +534,7 @@ export default function App() {
       </section> */}
 
       {/* ── WHAT TO EXPECT ── */}
-     <section id="what-to-expect" className="py-24 bg-white">
+      <section id="what-to-expect" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div
             ref={expectSection.ref}
@@ -570,9 +593,8 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div
             ref={panelSection.ref}
-            className={`transition-all duration-700 ${
-              panelSection.inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
+            className={`transition-all duration-700 ${panelSection.inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
           >
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="inline-block px-3 py-1 bg-amber-500/20 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-widest rounded-full mb-4">
@@ -596,14 +618,14 @@ export default function App() {
                   className="group relative bg-white/5 border border-white/10 hover:border-amber-500/40 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10"
                   style={{ transitionDelay: `${i * 80}ms` }}
                 >
-                <div className="relative h-[340px] md:h-64 overflow-hidden">
-  <img
-    src={judge.img}
-    alt={judge.name}
-    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
-  />
-  <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent" />
-</div>
+                  <div className="relative h-[340px] md:h-64 overflow-hidden">
+                    <img
+                      src={judge.img}
+                      alt={judge.name}
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent" />
+                  </div>
                   <div className="p-5">
                     <h3 className="font-display text-lg font-bold text-white">{judge.name}</h3>
                     <p className="text-amber-400 text-xs font-medium mt-1">{judge.title}</p>
@@ -630,7 +652,7 @@ export default function App() {
       </section>
 
       {/* ── CTA STRIP ── */}
-        <section className="bg-amber-500 py-16">
+      <section className="bg-amber-500 py-16">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-navy-950 mb-4">
             Ready to Pitch Your Vision to Texas?
@@ -642,27 +664,28 @@ export default function App() {
           <div className="flex flex-wrap justify-center gap-4">
             <button
               id="apply"
-              onClick={() => setApplyOpen(true)}
+              // onClick={() => setApplyOpen(true)}
+              onClick={() => setApplicationsClosed(true)}
               className="px-8 py-3.5 bg-navy-950 hover:bg-navy-900 text-white font-bold text-sm rounded-full transition-all duration-200 hover:shadow-xl hover:shadow-navy-950/30 hover:-translate-y-0.5 inline-flex items-center gap-2"
             >
               Apply Now <ArrowRight className="w-4 h-4" />
             </button>
-            {/* <a
+            <a
               id="tickets"
-              href="https://www.zeffy.com/en-US/ticketing/loons-lair-2026-audience-tickets"
+              href="https://connect.intuit.com/pay/Investigo/scs-v1-496ce6cf3a904c1280ea33efc8011f296e9a17a9c3c746d2b06b6caca9600b1de04397566d854ec1a6c1df057791e930?locale=EN_US&cta=saveandcopylink"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-3.5 bg-white/20 hover:bg-white/30 border border-navy-950/20 text-navy-950 font-semibold text-sm rounded-full transition-all duration-200"
             >
               Purchase Audience Tickets
-            </a> */}
+            </a>
 
-            {/*} <a
+            {/* <a
               href="/tickets"
               className="px-8 py-3.5 bg-white/20 hover:bg-white/30 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
             >
               Purchase Audience Tickets
-            </a> */}
+            </a>  */}
           </div>
         </div>
       </section>
@@ -869,6 +892,34 @@ export default function App() {
       </footer>
 
       {applyOpen && <ApplicationModal onClose={() => setApplyOpen(false)} />}
+      {reportsOpen && <ReportsModal onClose={() => setReportsOpen(false)} />}
+      {applicationsClosed && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center">
+
+            <div className="mx-auto mb-5 w-14 h-14 rounded-full bg-amber-100 flex items-center justify-center">
+              <FileText className="w-7 h-7 text-amber-600" />
+            </div>
+
+            <h2 className="font-display text-2xl font-bold text-navy-950 mb-3">
+              Applications Closed
+            </h2>
+
+            <p className="text-gray-500 text-sm leading-relaxed mb-6">
+              Applications for the Lone Star Investor Forum 2026 are now closed. Thank you for your interest.
+            </p>
+
+            <button
+              onClick={() => setApplicationsClosed(false)}
+              className="px-6 py-2.5 bg-navy-950 hover:bg-navy-900 text-white font-semibold text-sm rounded-full transition-all"
+            >
+              Close
+            </button>
+
+          </div>
+        </div>
+      )}
+
       {reportsOpen && <ReportsModal onClose={() => setReportsOpen(false)} />}
     </div>
   );
