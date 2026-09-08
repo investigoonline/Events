@@ -470,14 +470,14 @@ export default function App() {
             >
               Apply to Pitch <ArrowRight className="w-4 h-4" />
             </button>
-            {/* <a
+             <a
               href="https://connect.intuit.com/pay/Investigo/scs-v1-496ce6cf3a904c1280ea33efc8011f296e9a17a9c3c746d2b06b6caca9600b1de04397566d854ec1a6c1df057791e930?locale=EN_US&cta=saveandcopylink"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
             >
               Buy Tickets
-            </a> */}
+            </a> 
             {/* <a
               href="/tickets"
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
@@ -670,7 +670,7 @@ export default function App() {
             >
               Apply Now <ArrowRight className="w-4 h-4" />
             </button>
-            {/* <a
+             <a
               id="tickets"
               href="https://connect.intuit.com/pay/Investigo/scs-v1-496ce6cf3a904c1280ea33efc8011f296e9a17a9c3c746d2b06b6caca9600b1de04397566d854ec1a6c1df057791e930?locale=EN_US&cta=saveandcopylink"
               target="_blank"
@@ -678,7 +678,7 @@ export default function App() {
               className="px-8 py-3.5 bg-white/20 hover:bg-white/30 border border-navy-950/20 text-navy-950 font-semibold text-sm rounded-full transition-all duration-200"
             >
               Purchase Audience Tickets
-            </a> */}
+            </a> 
 
             {/* <a
               href="/tickets"
