@@ -166,13 +166,13 @@ export default function App() {
 
           <div className="flex justify-end items-center gap-4">
 
-            <button
+            {/* <button
               // onClick={() => setApplyOpen(true)}
               onClick={() => setApplicationsClosed(true)}
               className="hidden lg:inline-flex px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-navy-950 rounded-full font-semibold text-sm transition-all"
             >
               Apply Now
-            </button>
+            </button> */}
 
             <button
               className="lg:hidden text-white"
@@ -373,7 +373,7 @@ export default function App() {
 
             ))}
 
-            <button
+            {/* <button
               className="text-amber-400 font-semibold"
               onClick={() => {
                 setApplicationsClosed(true);
@@ -381,7 +381,7 @@ export default function App() {
               }}
             >
               Apply Now
-            </button>
+            </button> */}
 
           </div>
 
@@ -422,7 +422,7 @@ export default function App() {
         >
           <div className=" mt-16 inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/40 rounded-full text-amber-300 text-sm font-medium mb-2">
             <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-            Applications Now Open — 2026
+            Applications Closed — 2026
           </div>
 
 
@@ -463,13 +463,13 @@ export default function App() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 pt-4 -translate-y-6">
-            <button
+            {/* <button
               // onClick={() => setApplyOpen(true)}
               onClick={() => setApplicationsClosed(true)}
               className="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold text-sm rounded-full transition-all duration-200 hover:shadow-xl hover:shadow-amber-500/40 hover:-translate-y-0.5 inline-flex items-center gap-2"
             >
               Apply to Pitch <ArrowRight className="w-4 h-4" />
-            </button>
+            </button> */}
              <a
               href="https://connect.intuit.com/pay/Investigo/scs-v1-496ce6cf3a904c1280ea33efc8011f296e9a17a9c3c746d2b06b6caca9600b1de04397566d854ec1a6c1df057791e930?locale=EN_US&cta=saveandcopylink"
               target="_blank"
@@ -662,14 +662,14 @@ export default function App() {
             ventures seeking their next growth catalyst.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <button
+            {/* <button
               id="apply"
               // onClick={() => setApplyOpen(true)}
               onClick={() => setApplicationsClosed(true)}
               className="px-8 py-3.5 bg-navy-950 hover:bg-navy-900 text-white font-bold text-sm rounded-full transition-all duration-200 hover:shadow-xl hover:shadow-navy-950/30 hover:-translate-y-0.5 inline-flex items-center gap-2"
             >
               Apply Now <ArrowRight className="w-4 h-4" />
-            </button>
+            </button> */}
              <a
               id="tickets"
               href="https://connect.intuit.com/pay/Investigo/scs-v1-496ce6cf3a904c1280ea33efc8011f296e9a17a9c3c746d2b06b6caca9600b1de04397566d854ec1a6c1df057791e930?locale=EN_US&cta=saveandcopylink"
