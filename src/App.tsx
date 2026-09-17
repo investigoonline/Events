@@ -80,7 +80,6 @@ export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeBio, setActiveBio] = useState<number | null>(null);
   const [applyOpen, setApplyOpen] = useState(false);
-  const [applicationsClosed, setApplicationsClosed] = useState(false);
   const [reportsOpen, setReportsOpen] = useState(false);
 
   useEffect(() => {
@@ -166,13 +165,12 @@ export default function App() {
 
           <div className="flex justify-end items-center gap-4">
 
-            {/* <button
-              // onClick={() => setApplyOpen(true)}
-              onClick={() => setApplicationsClosed(true)}
+            <button
+              onClick={() => setApplyOpen(true)}
               className="hidden lg:inline-flex px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-navy-950 rounded-full font-semibold text-sm transition-all"
             >
               Apply Now
-            </button> */}
+            </button>
 
             <button
               className="lg:hidden text-white"
@@ -232,7 +230,7 @@ export default function App() {
                         className="h-14 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
                       />
                     </a>
-
+                    
 
                     <a
                       href="https://www.score.org//"
@@ -288,36 +286,36 @@ export default function App() {
         {/* <div className="lg:hidden border-t border-white/10 py-4 px-4"> */}
         <div
           className={`lg:hidden border-t px-4 overflow-hidden transition-all duration-300 ${navScrolled
-            ? "max-h-0 opacity-0 py-0 border-transparent"
-            : "max-h-72 opacity-100 py-4 border-white/10"
+              ? "max-h-0 opacity-0 py-0 border-transparent"
+              : "max-h-72 opacity-100 py-4 border-white/10"
             }`}
         >
 
           <div className="text-center mb-4">
-            <p className="text-[11px] uppercase tracking-[0.3em] text-amber-400 mb-3">
-              Ecosystem Partners
-            </p>
+  <p className="text-[11px] uppercase tracking-[0.3em] text-amber-400 mb-3">
+    Ecosystem Partners
+  </p>
 
-            <div className="flex justify-center items-center gap-4">
-              <img
-                src="/tie_logo.png"
-                alt="TiE"
-                className="h-12 w-28 object-contain"
-              />
-              <img
-                src="/chamber_logo.png"
-                alt="Chamber"
-                className="h-16 w-auto object-contain"
-              />
-              <img
-                src="/score_logo.png"
-                alt="SCORE"
-                className="h-10 w-24 object-contain"
-              />
+  <div className="flex justify-center items-center gap-4">
+    <img
+      src="/tie_logo.png"
+      alt="TiE"
+      className="h-12 w-28 object-contain"
+    />
+<img
+      src="/chamber_logo.png"
+      alt="Chamber"
+      className="h-16 w-auto object-contain"
+    />
+    <img
+      src="/score_logo.png"
+      alt="SCORE"
+      className="h-10 w-24 object-contain"
+    />
 
-
-            </div>
-          </div>
+    
+  </div>
+</div>
 
           <div className="text-center">
             <p className="text-[11px] uppercase tracking-[0.3em] text-amber-400 mb-3">
@@ -336,7 +334,7 @@ export default function App() {
 
         {/* ----------- Announcement Bar ----------- */}
 
-        {/* <div
+{/* <div
   className={`overflow-hidden transition-all duration-300 ${
     navScrolled ? "max-h-0 opacity-0" : "max-h-10 opacity-100"
   }`}
@@ -346,14 +344,15 @@ export default function App() {
   </div>
 </div> */}
 
-        <div
-          className={`overflow-hidden transition-all duration-300 ${navScrolled ? "max-h-0 opacity-0" : "max-h-7 opacity-100"
-            }`}
-        >
-          <div className="bg-amber-600 text-navy-950 text-center py-1.5 font-medium text-xs md:text-sm">
-            📢 <strong>Application Deadline: September 5, 2026</strong>
-          </div>
-        </div>
+<div
+  className={`overflow-hidden transition-all duration-300 ${
+    navScrolled ? "max-h-0 opacity-0" : "max-h-7 opacity-100"
+  }`}
+>
+  <div className="bg-amber-600 text-navy-950 text-center py-1.5 font-medium text-xs md:text-sm">
+    📢 <strong>Season 1 Application Deadline: September 5, 2026</strong>
+  </div>
+</div>
         {/* Mobile Drawer */}
 
         {mobileOpen && (
@@ -373,15 +372,15 @@ export default function App() {
 
             ))}
 
-            {/* <button
+            <button
               className="text-amber-400 font-semibold"
               onClick={() => {
-                setApplicationsClosed(true);
+                setApplyOpen(true);
                 setMobileOpen(false);
               }}
             >
               Apply Now
-            </button> */}
+            </button>
 
           </div>
 
@@ -389,19 +388,19 @@ export default function App() {
 
       </header>
 
+  
 
-
-
+      
 
       {/* ── HERO ── */}
 
       <section
-
+      
         id="about"
         className="relative min-h-screen pt-[170px] flex flex-col items-center justify-center text-center overflow-hidden"
       >
 
-
+        
         {/* Background */}
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -422,7 +421,7 @@ export default function App() {
         >
           <div className=" mt-16 inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/40 rounded-full text-amber-300 text-sm font-medium mb-2">
             <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-            Applications Closed — 2026
+            Applications Now Open for Season 2 — 2027
           </div>
 
 
@@ -463,21 +462,20 @@ export default function App() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 pt-4 -translate-y-6">
-            {/* <button
-              // onClick={() => setApplyOpen(true)}
-              onClick={() => setApplicationsClosed(true)}
+            <button
+              onClick={() => setApplyOpen(true)}
               className="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-navy-950 font-bold text-sm rounded-full transition-all duration-200 hover:shadow-xl hover:shadow-amber-500/40 hover:-translate-y-0.5 inline-flex items-center gap-2"
             >
               Apply to Pitch <ArrowRight className="w-4 h-4" />
-            </button> */}
-             <a
+            </button>
+            <a
               href="https://connect.intuit.com/pay/Investigo/scs-v1-496ce6cf3a904c1280ea33efc8011f296e9a17a9c3c746d2b06b6caca9600b1de04397566d854ec1a6c1df057791e930?locale=EN_US&cta=saveandcopylink"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
             >
               Buy Tickets
-            </a> 
+            </a>
             {/* <a
               href="/tickets"
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
@@ -618,14 +616,14 @@ export default function App() {
                   className="group relative bg-white/5 border border-white/10 hover:border-amber-500/40 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10"
                   style={{ transitionDelay: `${i * 80}ms` }}
                 >
-                  <div className="relative h-[340px] md:h-64 overflow-hidden">
-                    <img
-                      src={judge.img}
-                      alt={judge.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent" />
-                  </div>
+                 <div className="relative h-[340px] md:h-64 overflow-hidden">
+  <img
+    src={judge.img}
+    alt={judge.name}
+    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent" />
+</div>
                   <div className="p-5">
                     <h3 className="font-display text-lg font-bold text-white">{judge.name}</h3>
                     <p className="text-amber-400 text-xs font-medium mt-1">{judge.title}</p>
@@ -662,14 +660,13 @@ export default function App() {
             ventures seeking their next growth catalyst.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            {/* <button
+            <button
               id="apply"
-              // onClick={() => setApplyOpen(true)}
-              onClick={() => setApplicationsClosed(true)}
+              onClick={() => setApplyOpen(true)}
               className="px-8 py-3.5 bg-navy-950 hover:bg-navy-900 text-white font-bold text-sm rounded-full transition-all duration-200 hover:shadow-xl hover:shadow-navy-950/30 hover:-translate-y-0.5 inline-flex items-center gap-2"
             >
               Apply Now <ArrowRight className="w-4 h-4" />
-            </button> */}
+            </button>
              <a
               id="tickets"
               href="https://connect.intuit.com/pay/Investigo/scs-v1-496ce6cf3a904c1280ea33efc8011f296e9a17a9c3c746d2b06b6caca9600b1de04397566d854ec1a6c1df057791e930?locale=EN_US&cta=saveandcopylink"
@@ -680,7 +677,7 @@ export default function App() {
               Purchase Audience Tickets
             </a> 
 
-            {/* <a
+             {/* <a
               href="/tickets"
               className="px-8 py-3.5 bg-white/20 hover:bg-white/30 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
             >
@@ -892,34 +889,6 @@ export default function App() {
       </footer>
 
       {applyOpen && <ApplicationModal onClose={() => setApplyOpen(false)} />}
-      {reportsOpen && <ReportsModal onClose={() => setReportsOpen(false)} />}
-      {applicationsClosed && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center">
-
-            <div className="mx-auto mb-5 w-14 h-14 rounded-full bg-amber-100 flex items-center justify-center">
-              <FileText className="w-7 h-7 text-amber-600" />
-            </div>
-
-            <h2 className="font-display text-2xl font-bold text-navy-950 mb-3">
-              Applications Closed
-            </h2>
-
-            <p className="text-gray-500 text-sm leading-relaxed mb-6">
-              Applications for the Lone Star Investor Forum 2026 are now closed. Thank you for your interest.
-            </p>
-
-            <button
-              onClick={() => setApplicationsClosed(false)}
-              className="px-6 py-2.5 bg-navy-950 hover:bg-navy-900 text-white font-semibold text-sm rounded-full transition-all"
-            >
-              Close
-            </button>
-
-          </div>
-        </div>
-      )}
-
       {reportsOpen && <ReportsModal onClose={() => setReportsOpen(false)} />}
     </div>
   );
