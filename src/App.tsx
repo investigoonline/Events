@@ -350,7 +350,7 @@ export default function App() {
   }`}
 >
   <div className="bg-amber-600 text-navy-950 text-center py-1.5 font-medium text-xs md:text-sm">
-    📢 <strong>Season 1 Application Deadline: September 5, 2026</strong>
+    📢 <strong>Season-1 Application Deadline: September 5, 2026</strong>
   </div>
 </div>
         {/* Mobile Drawer */}
@@ -421,14 +421,14 @@ export default function App() {
         >
           <div className=" mt-16 inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/40 rounded-full text-amber-300 text-sm font-medium mb-2">
             <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-            Applications Now Open for Season 2 — 2027
+            Applications Now Open for Season 2
           </div>
 
 
 
           <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight">
             Lone Star<br />
-            <span className="text-amber-400">Investor Forum</span>
+            <span className="text-amber-400">Investor Forum</span><br/></span><span>Season-1</span>
           </h1>
 
           <p className="text-2xl md:text-3xl text-white/70 font-light">
