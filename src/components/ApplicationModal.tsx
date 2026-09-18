@@ -623,7 +623,7 @@ export default function ApplicationModal({ onClose }: Props) {
         <div className="flex items-start justify-between px-6 pt-6 pb-4 border-b border-gray-100 shrink-0">
           <div>
             <h2 className="font-display text-xl font-bold text-navy-950">Application Submission</h2>
-            <p className="text-sm text-gray-500 mt-0.5">Lone Star Investor Forum 2026</p>
+            <p className="text-sm text-gray-500 mt-0.5">Lone Star Investor Forum Season-2</p>
           </div>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600">
             <X className="w-5 h-5" />
@@ -657,8 +657,8 @@ export default function ApplicationModal({ onClose }: Props) {
               </div>
               <h3 className="font-display text-2xl font-bold text-navy-950">Application Submitted!</h3>
               <p className="text-gray-500 max-w-sm text-sm leading-relaxed">
-                Thank you for applying to the Lone Star Investor Forum 2026. We'll review your
-                application and be in touch before the event on October 17th.
+                Thank you for applying to the Lone Star Investor Forum Season-2. We'll review your
+                application and be in touch very soon.
               </p>
               <button onClick={onClose} className="mt-2 px-8 py-3 bg-amber-500 hover:bg-amber-400 text-navy-950 font-semibold text-sm rounded-full transition-all">
                 Close
