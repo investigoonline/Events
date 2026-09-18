@@ -426,9 +426,9 @@ export default function App() {
 
 
 
-          <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight">
+        <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight">
             Lone Star<br />
-            <span className="text-amber-400">Investor Forum</span><br/></span><span>Season-1</span>
+            <span className="text-amber-400">Investor Forum<br/></span><span>Season-1</span>
           </h1>
 
           <p className="text-2xl md:text-3xl text-white/70 font-light">
