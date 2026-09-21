@@ -72,8 +72,16 @@ const mediaLogos = [
   { name: 'Houston Chronicle', width: 180 },
 ];
 
-const corporatePartners = ['Four Oaks Insurance', 'Investigo Online'];
-const corporateSponsors = ['Celersoft LLC'];
+// const corporatePartners = ['Four Oaks Insurance', 'Investigo Online'];
+// const corporateSponsors = ['Celersoft LLC'];
+const corporatePartners = [
+  '/Four-oaks-logo.png',
+  '/investigo_logo.png',
+];
+
+const corporateSponsors = [
+  '/logo_celersoft.png',
+];
 
 export default function App() {
   const [navScrolled, setNavScrolled] = useState(false);
@@ -707,7 +715,7 @@ export default function App() {
             </div>
 
             {/* Corporate Partners */}
-            <div className="mb-14">
+            {/* <div className="mb-14">
               <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
                 Corporate Partners
               </p>
@@ -721,10 +729,30 @@ export default function App() {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
+              <div className="mb-14">
+  <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
+    Corporate Partners
+  </p>
+
+  <div className="flex flex-wrap justify-center gap-6">
+    {corporatePartners.map((logo, index) => (
+      <div
+        key={index}
+        className="flex items-center justify-center w-[250px] h-[100px] bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-200"
+      >
+        <img
+          src={logo}
+          alt="Corporate Partner Logo"
+          className="w-[220px] h-[90px] object-contain"
+        />
+      </div>
+    ))}
+  </div>
+</div>
 
             {/* Corporate Sponsors */}
-            <div>
+            {/* <div>
               <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
                 Corporate Sponsors
               </p>
@@ -738,7 +766,27 @@ export default function App() {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
+            <div>
+  <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
+    Corporate Sponsors
+  </p>
+
+  <div className="flex flex-wrap justify-center gap-6">
+    {corporateSponsors.map((logo, index) => (
+      <div
+        key={index}
+        className="flex items-center justify-center w-[250px] h-[100px] bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-200"
+      >
+        <img
+          src={logo}
+          alt="Corporate Sponsor Logo"
+          className="w-[220px] h-[90px] object-contain"
+        />
+      </div>
+    ))}
+  </div>
+</div>
 
             {/* Become a sponsor */}
             <div className="mt-14 text-center">
