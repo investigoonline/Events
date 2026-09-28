@@ -731,9 +731,9 @@ export default function App() {
               </div>
             </div> */}
               <div className="mb-14">
-  <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
+  {/* <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
     Corporate Partners
-  </p>
+  </p> */}
 
   <div className="flex flex-wrap justify-center gap-6">
     {corporatePartners.map((logo, index) => (
@@ -768,11 +768,11 @@ export default function App() {
               </div>
             </div> */}
             <div>
-  <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
+  {/* <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
     Corporate Sponsors
-  </p>
+  </p> */}
 
-  <div className="flex flex-wrap justify-center gap-6">
+  {/* <div className="flex flex-wrap justify-center gap-6">
     {corporateSponsors.map((logo, index) => (
       <div
         key={index}
@@ -785,7 +785,7 @@ export default function App() {
         />
       </div>
     ))}
-  </div>
+  </div> */}
 </div>
 
             {/* Become a sponsor */}
