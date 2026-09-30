@@ -75,8 +75,10 @@ const mediaLogos = [
 // const corporatePartners = ['Four Oaks Insurance', 'Investigo Online'];
 // const corporateSponsors = ['Celersoft LLC'];
 const corporatePartners = [
+  '/matt_logo.png',
   '/Four-oaks-logo.png',
   '/investigo_logo.png',
+  '/superalign_logo.jpg',
 ];
 
 const corporateSponsors = [
@@ -730,11 +732,8 @@ export default function App() {
                 ))}
               </div>
             </div> */}
-              <div className="mb-14">
-  {/* <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
-    Corporate Partners
-  </p> */}
-
+             {/* Corporate Partners */}
+<div className="mb-14">
   <div className="flex flex-wrap justify-center gap-6">
     {corporatePartners.map((logo, index) => (
       <div
@@ -750,7 +749,6 @@ export default function App() {
     ))}
   </div>
 </div>
-
             {/* Corporate Sponsors */}
             {/* <div>
               <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
