@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { Star, ChevronDown, Users, TrendingUp, Award, ArrowRight, Menu, X, MapPin, Calendar, Clock, Mail, Phone, Globe, FileText } from 'lucide-react';
+import QRCode from 'qrcode';
+import { Star, ChevronDown, Users, TrendingUp, Award, ArrowRight, Menu, X, MapPin, Calendar, Clock, Mail, Phone, Globe, FileText, Ticket, CheckCircle, AlertCircle, Loader2, User } from 'lucide-react';
 import ApplicationModal from './components/ApplicationModal';
 import ReportsModal from './components/ReportsModal';
 
@@ -74,6 +75,7 @@ const mediaLogos = [
 
 // const corporatePartners = ['Four Oaks Insurance', 'Investigo Online'];
 // const corporateSponsors = ['Celersoft LLC'];
+
 const corporatePartners = [
   '/matt_logo.png',
   '/Four-oaks-logo.png',
@@ -85,12 +87,244 @@ const corporateSponsors = [
   '/logo_celersoft.png',
 ];
 
+// -----------------------------------------------------------------------------
+// TICKETING CONFIGURATION
+// -----------------------------------------------------------------------------
+// Replace this with the Power Automate HTTP trigger URL after the flow is
+// created. Do NOT put any secret credentials in this file.
+// The promo code itself is validated by Power Automate, not trusted from the UI.
+const POWER_AUTOMATE_PROMO_URL = 'https://default4f3e4031eaf04a909bd6b421cf9b3a.ad.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/09/workflows/6ab6b1130e1042d9863d4039d8a98b26/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=_J8OXoY0V4ILsEbjkjoOxOtmQ2bb6ESBhKmXnba6mSI';
+
+const INTUIT_TICKET_URL =
+  'https://connect.intuit.com/pay/Investigo/scs-v1-496ce6cf3a904c1280ea33efc8011f296e9a17a9c3c746d2b06b6caca9600b1de04397566d854ec1a6c1df057791e930?locale=EN_US&cta=saveandcopylink';
+
 export default function App() {
   const [navScrolled, setNavScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeBio, setActiveBio] = useState<number | null>(null);
   const [applyOpen, setApplyOpen] = useState(false);
   const [reportsOpen, setReportsOpen] = useState(false);
+
+  // Ticketing state
+  const [ticketOpen, setTicketOpen] = useState(false);
+  const [ticketStep, setTicketStep] = useState<'options' | 'promo'>('options');
+  const [ticketName, setTicketName] = useState('');
+  const [ticketEmail, setTicketEmail] = useState('');
+  const [ticketCompanyName, setTicketCompanyName] = useState('');
+  const [ticketReferral, setTicketReferral] = useState('');
+  const [promoCode, setPromoCode] = useState('');
+  const [ticketSubmitting, setTicketSubmitting] = useState(false);
+  const [ticketMessage, setTicketMessage] = useState('');
+  const [ticketSuccess, setTicketSuccess] = useState(false);
+  const [generatedTicketId, setGeneratedTicketId] = useState('');
+  const [generatedQrToken, setGeneratedQrToken] = useState('');
+  const [generatedQrImage, setGeneratedQrImage] = useState('');
+
+  const resetTicketModal = () => {
+    setTicketOpen(false);
+    setTicketStep('options');
+    setTicketName('');
+    setTicketEmail('');
+    setTicketCompanyName('');
+    setTicketReferral('');
+    setPromoCode('');
+    setTicketSubmitting(false);
+    setTicketMessage('');
+    setTicketSuccess(false);
+    setGeneratedTicketId('');
+    setGeneratedQrToken('');
+    setGeneratedQrImage('');
+  };
+
+  const openTicketModal = () => {
+    setTicketStep('options');
+    setTicketName('');
+    setTicketEmail('');
+    setTicketCompanyName('');
+    setTicketReferral('');
+    setPromoCode('');
+    setTicketSubmitting(false);
+    setTicketMessage('');
+    setTicketSuccess(false);
+    setGeneratedTicketId('');
+    setGeneratedQrToken('');
+    setGeneratedQrImage('');
+    setTicketOpen(true);
+  };
+  const handlePrintTicket = () => {
+    const ticket = document.getElementById('printable-ticket');
+
+    if (!ticket) {
+      return;
+    }
+
+    const printWindow = window.open('', '_blank', 'width=900,height=1200');
+
+    if (!printWindow) {
+      alert('Please allow pop-ups to print your ticket.');
+      return;
+    }
+
+    const styles = Array.from(
+      document.querySelectorAll('link[rel="stylesheet"], style')
+    )
+      .map((element) => element.outerHTML)
+      .join('\n');
+
+    printWindow.document.open();
+
+    printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8" />
+        <title>Lone Star Investor Forum Ticket</title>
+        ${styles}
+
+        <style>
+          @page {
+            size: A4 portrait;
+            margin: 10mm;
+          }
+
+          html,
+          body {
+            margin: 0;
+            padding: 0;
+            background: white;
+          }
+
+          body {
+            width: 100%;
+          }
+
+          #printable-ticket {
+  width: 117.65%;
+  max-width: none;
+  margin: 0 auto;
+  background: white;
+  overflow: visible;
+  zoom: 0.85;
+}
+          #printable-ticket img {
+            max-width: 100%;
+          }
+
+          .print\\:hidden {
+            display: none !important;
+          }
+        </style>
+      </head>
+
+      <body>
+        ${ticket.outerHTML}
+      </body>
+    </html>
+  `);
+
+    printWindow.document.close();
+
+    printWindow.onload = () => {
+      setTimeout(() => {
+        printWindow.focus();
+        printWindow.print();
+      }, 500);
+    };
+  };
+
+  const handlePromoTicketSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setTicketMessage('');
+    setTicketSuccess(false);
+
+    const name = ticketName.trim();
+    const email = ticketEmail.trim().toLowerCase();
+    const companyName = ticketCompanyName.trim();
+    const referral = ticketReferral.trim();
+    const code = promoCode.trim();
+    if (code !== 'Lonestar26') {
+      setTicketMessage('Incorrect promo code. Please enter the correct promo code.');
+      return;
+    }
+    const ticketId = `LS1-2026-${crypto.randomUUID().replace(/-/g, '').slice(0, 8).toUpperCase()}`;
+    const qrToken = `LS1QR-${crypto.randomUUID().replace(/-/g, '').toUpperCase()}`;
+
+    if (!name || !email || !code || !companyName) {
+      setTicketMessage('Please enter your promo code, full name, company name, and email address.');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setTicketMessage('Please enter a valid email address.');
+      return;
+    }
+
+    if (POWER_AUTOMATE_PROMO_URL === 'PASTE_POWER_AUTOMATE_HTTP_TRIGGER_URL_HERE') {
+      setTicketMessage('Ticket registration is not configured yet. Please contact the event team.');
+      return;
+    }
+
+    try {
+      setTicketSubmitting(true);
+      const qrImage = await QRCode.toDataURL(qrToken, {
+        width: 320,
+        margin: 2,
+        errorCorrectionLevel: 'H',
+      });
+      setGeneratedTicketId(ticketId);
+      setGeneratedQrToken(qrToken);
+      setGeneratedQrImage(qrImage);
+
+      const response = await fetch(POWER_AUTOMATE_PROMO_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          companyName,
+          referral,
+          promoCode: code,
+          ticketId,
+          qrToken,
+          qrImage,
+          source: 'Lone Star Investor Forum Website',
+          ticketType: 'Sponsored',
+        }),
+      });
+
+      let result: { success?: boolean; message?: string } = {};
+
+      try {
+        result = await response.json();
+      } catch {
+        // Power Automate may return an empty/non-JSON response.
+      }
+
+      if (!response.ok || result.success === false) {
+        throw new Error(
+          result.message || 'We could not create your ticket. Please check the promo code and try again.'
+        );
+      }
+
+      setTicketSuccess(true);
+
+      setTicketMessage(
+        result.message ||
+        'Thank you for using the IFS promo code. Your sponsored ticket has been created successfully.'
+      );
+    } catch (error) {
+      setTicketSuccess(false);
+      setTicketMessage(
+        error instanceof Error
+          ? error.message
+          : 'Something went wrong while creating your ticket. Please try again.'
+      );
+    } finally {
+      setTicketSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setNavScrolled(window.scrollY > 60);
@@ -108,6 +342,59 @@ export default function App() {
 
   return (
     <div className="font-sans text-gray-900 bg-white overflow-x-hidden">
+      <style>{`
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+
+    html,
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    body * {
+      visibility: hidden !important;
+    }
+
+    #printable-ticket,
+    #printable-ticket * {
+      visibility: visible !important;
+    }
+
+    #printable-ticket {
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
+      width: 100% !important;
+      max-width: none !important;
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+    }
+
+    #printable-ticket * {
+      overflow: visible !important;
+    }
+
+    .print\\:hidden {
+      display: none !important;
+    }
+      .print-ticket-modal {
+  max-height: none !important;
+  overflow: visible !important;
+}
+  }
+`}</style>
       {/* Google Fonts */}
       <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap"
@@ -240,7 +527,7 @@ export default function App() {
                         className="h-14 w-auto object-contain hover:scale-105 transition-transform duration-200 cursor-pointer"
                       />
                     </a>
-                    
+
 
                     <a
                       href="https://www.score.org//"
@@ -296,36 +583,36 @@ export default function App() {
         {/* <div className="lg:hidden border-t border-white/10 py-4 px-4"> */}
         <div
           className={`lg:hidden border-t px-4 overflow-hidden transition-all duration-300 ${navScrolled
-              ? "max-h-0 opacity-0 py-0 border-transparent"
-              : "max-h-72 opacity-100 py-4 border-white/10"
+            ? "max-h-0 opacity-0 py-0 border-transparent"
+            : "max-h-72 opacity-100 py-4 border-white/10"
             }`}
         >
 
           <div className="text-center mb-4">
-  <p className="text-[11px] uppercase tracking-[0.3em] text-amber-400 mb-3">
-    Ecosystem Partners
-  </p>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-amber-400 mb-3">
+              Ecosystem Partners
+            </p>
 
-  <div className="flex justify-center items-center gap-4">
-    <img
-      src="/tie_logo.png"
-      alt="TiE"
-      className="h-12 w-28 object-contain"
-    />
-<img
-      src="/chamber_logo.png"
-      alt="Chamber"
-      className="h-16 w-auto object-contain"
-    />
-    <img
-      src="/score_logo.png"
-      alt="SCORE"
-      className="h-10 w-24 object-contain"
-    />
+            <div className="flex justify-center items-center gap-4">
+              <img
+                src="/tie_logo.png"
+                alt="TiE"
+                className="h-12 w-28 object-contain"
+              />
+              <img
+                src="/chamber_logo.png"
+                alt="Chamber"
+                className="h-16 w-auto object-contain"
+              />
+              <img
+                src="/score_logo.png"
+                alt="SCORE"
+                className="h-10 w-24 object-contain"
+              />
 
-    
-  </div>
-</div>
+
+            </div>
+          </div>
 
           <div className="text-center">
             <p className="text-[11px] uppercase tracking-[0.3em] text-amber-400 mb-3">
@@ -344,7 +631,7 @@ export default function App() {
 
         {/* ----------- Announcement Bar ----------- */}
 
-{/* <div
+        {/* <div
   className={`overflow-hidden transition-all duration-300 ${
     navScrolled ? "max-h-0 opacity-0" : "max-h-10 opacity-100"
   }`}
@@ -354,15 +641,14 @@ export default function App() {
   </div>
 </div> */}
 
-<div
-  className={`overflow-hidden transition-all duration-300 ${
-    navScrolled ? "max-h-0 opacity-0" : "max-h-7 opacity-100"
-  }`}
->
-  <div className="bg-amber-600 text-navy-950 text-center py-1.5 font-medium text-xs md:text-sm">
-    📢 <strong>Season-1 Application Deadline: September 5, 2026</strong>
-  </div>
-</div>
+        <div
+          className={`overflow-hidden transition-all duration-300 ${navScrolled ? "max-h-0 opacity-0" : "max-h-7 opacity-100"
+            }`}
+        >
+          <div className="bg-amber-600 text-navy-950 text-center py-1.5 font-medium text-xs md:text-sm">
+            📢 <strong>Season 1 Application Deadline: September 5, 2026</strong>
+          </div>
+        </div>
         {/* Mobile Drawer */}
 
         {mobileOpen && (
@@ -398,19 +684,19 @@ export default function App() {
 
       </header>
 
-  
 
-      
+
+
 
       {/* ── HERO ── */}
 
       <section
-      
+
         id="about"
         className="relative min-h-screen pt-[170px] flex flex-col items-center justify-center text-center overflow-hidden"
       >
 
-        
+
         {/* Background */}
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -436,9 +722,9 @@ export default function App() {
 
 
 
-        <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight">
+          <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight">
             Lone Star<br />
-            <span className="text-amber-400">Investor Forum<br/></span><span>Season-1</span>
+            <span className="text-amber-400">Investor Forum<br /></span><span>Season-1</span>
           </h1>
 
           <p className="text-2xl md:text-3xl text-white/70 font-light">
@@ -461,7 +747,7 @@ export default function App() {
             <span className="h-4 w-px bg-white/30 hidden sm:block" />
             <span className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-amber-400" />
-              6:00 PM – 9:00 PM
+              6:00 PM – 7:00 PM Networking <br></br> 7:00 PM – 9:00 PM Event
             </span>
           </div>
 
@@ -478,14 +764,13 @@ export default function App() {
             >
               Apply to Pitch <ArrowRight className="w-4 h-4" />
             </button>
-            <a
-              href="https://connect.intuit.com/pay/Investigo/scs-v1-496ce6cf3a904c1280ea33efc8011f296e9a17a9c3c746d2b06b6caca9600b1de04397566d854ec1a6c1df057791e930?locale=EN_US&cta=saveandcopylink"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={openTicketModal}
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
             >
               Buy Tickets
-            </a>
+            </button>
             {/* <a
               href="/tickets"
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
@@ -626,14 +911,14 @@ export default function App() {
                   className="group relative bg-white/5 border border-white/10 hover:border-amber-500/40 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10"
                   style={{ transitionDelay: `${i * 80}ms` }}
                 >
-                 <div className="relative h-[340px] md:h-64 overflow-hidden">
-  <img
-    src={judge.img}
-    alt={judge.name}
-    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
-  />
-  <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent" />
-</div>
+                  <div className="relative h-[340px] md:h-64 overflow-hidden">
+                    <img
+                      src={judge.img}
+                      alt={judge.name}
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent" />
+                  </div>
                   <div className="p-5">
                     <h3 className="font-display text-lg font-bold text-white">{judge.name}</h3>
                     <p className="text-amber-400 text-xs font-medium mt-1">{judge.title}</p>
@@ -677,17 +962,16 @@ export default function App() {
             >
               Apply Now <ArrowRight className="w-4 h-4" />
             </button>
-             <a
+            <button
               id="tickets"
-              href="https://connect.intuit.com/pay/Investigo/scs-v1-496ce6cf3a904c1280ea33efc8011f296e9a17a9c3c746d2b06b6caca9600b1de04397566d854ec1a6c1df057791e930?locale=EN_US&cta=saveandcopylink"
-              target="_blank"
-              rel="noopener noreferrer"
+              type="button"
+              onClick={openTicketModal}
               className="px-8 py-3.5 bg-white/20 hover:bg-white/30 border border-navy-950/20 text-navy-950 font-semibold text-sm rounded-full transition-all duration-200"
             >
               Purchase Audience Tickets
-            </a> 
+            </button>
 
-             {/* <a
+            {/* <a
               href="/tickets"
               className="px-8 py-3.5 bg-white/20 hover:bg-white/30 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
             >
@@ -732,23 +1016,25 @@ export default function App() {
                 ))}
               </div>
             </div> */}
-             {/* Corporate Partners */}
-<div className="mb-14">
-  <div className="flex flex-wrap justify-center gap-6">
-    {corporatePartners.map((logo, index) => (
-      <div
-        key={index}
-        className="flex items-center justify-center w-[250px] h-[100px] bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-200"
-      >
-        <img
-          src={logo}
-          alt="Corporate Partner Logo"
-          className="w-[220px] h-[90px] object-contain"
-        />
-      </div>
-    ))}
-  </div>
-</div>
+
+            {/* Corporate Partners */}
+            <div className="mb-14">
+              <div className="flex flex-wrap justify-center gap-6">
+                {corporatePartners.map((logo, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-center w-[250px] h-[100px] bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-amber-200 transition-all duration-200"
+                  >
+                    <img
+                      src={logo}
+                      alt="Corporate Partner Logo"
+                      className="w-[220px] h-[90px] object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Corporate Sponsors */}
             {/* <div>
               <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
@@ -765,12 +1051,13 @@ export default function App() {
                 ))}
               </div>
             </div> */}
+            {/* Corporate Sponsors */}
             <div>
-  {/* <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
+              {/* <p className="text-center text-xs font-semibold tracking-widest uppercase text-gray-400 mb-8">
     Corporate Sponsors
   </p> */}
 
-  {/* <div className="flex flex-wrap justify-center gap-6">
+              {/* <div className="flex flex-wrap justify-center gap-6">
     {corporateSponsors.map((logo, index) => (
       <div
         key={index}
@@ -784,7 +1071,7 @@ export default function App() {
       </div>
     ))}
   </div> */}
-</div>
+            </div>
 
             {/* Become a sponsor */}
             <div className="mt-14 text-center">
@@ -872,7 +1159,7 @@ export default function App() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Clock className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
-                  6:00 PM – 9:00 PM CST
+                  6:00 PM – 7:00 PM Networking | 7:00 PM – 9:00 PM Event CST
                 </li>
                 <li className="flex items-start gap-2">
                   <MapPin className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
@@ -933,6 +1220,400 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* ── TICKETING MODAL ── */}
+      {ticketOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="ticket-modal-title"
+        >
+          <div
+            className="absolute inset-0 bg-navy-950/80 backdrop-blur-sm"
+            onClick={resetTicketModal}
+          />
+
+          <div className="relative w-full max-w-6xl max-h-[95vh] overflow-y-auto rounded-3xl bg-white shadow-2xl print-ticket-modal">
+            <button
+              type="button"
+              onClick={resetTicketModal}
+              aria-label="Close ticket dialog"
+              className="absolute right-4 top-4 z-10 p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="bg-navy-950 px-6 py-7 text-center">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-amber-500 text-navy-950">
+                <Ticket className="w-6 h-6" />
+              </div>
+              <h2 id="ticket-modal-title" className="font-display text-2xl font-bold text-white">
+                Lone Star Investor Forum
+              </h2>
+              <p className="mt-1 text-sm text-white/60">Season 1 • Audience Tickets</p>
+            </div>
+
+            {!ticketSuccess && ticketStep === 'options' && (
+              <div className="p-6 md:p-8">
+                <h3 className="text-xl font-bold text-navy-950 text-center">
+                  How would you like to get your ticket?
+                </h3>
+                <p className="mt-2 text-sm text-gray-500 text-center">
+                  Choose an option below to continue.
+                </p>
+
+                <div className="mt-6 space-y-4">
+                  <a
+                    href={INTUIT_TICKET_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={resetTicketModal}
+                    className="group block rounded-2xl border-2 border-gray-200 p-5 hover:border-amber-500 hover:bg-amber-50/40 transition-all"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-navy-950 group-hover:bg-amber-500 transition-colors">
+                        <Ticket className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-navy-950">I Don't Have a Promo Code</h4>
+                        <p className="mt-1 text-sm text-gray-500">
+                          Continue to our existing secure ticket payment page.
+                        </p>
+                        <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-amber-700">
+                          Continue to payment <ArrowRight className="w-4 h-4" />
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTicketStep('promo');
+                      setTicketMessage('');
+                    }}
+                    className="group w-full text-left rounded-2xl border-2 border-amber-300 bg-amber-50/60 p-5 hover:border-amber-500 hover:bg-amber-50 transition-all"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-navy-950">
+                        <Ticket className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-navy-950">I Have a Promo Code</h4>
+                        <p className="mt-1 text-sm text-gray-600">
+                          Use your IFS promo code to receive a sponsored $0 ticket.
+                        </p>
+                        <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-amber-700">
+                          Enter promo code <ArrowRight className="w-4 h-4" />
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {!ticketSuccess && ticketStep === 'promo' && (
+              <form onSubmit={handlePromoTicketSubmit} className="p-6 md:p-8">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTicketStep('options');
+                    setTicketMessage('');
+                  }}
+                  className="mb-5 inline-flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-navy-950"
+                >
+                  ← Back
+                </button>
+
+                <div className="text-center">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-700">
+                    IFS Sponsored Ticket
+                  </span>
+                  <h3 className="mt-4 text-2xl font-bold text-navy-950">
+                    Enter Your Promo Code
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-500">
+                    If your promo code is valid, your ticket will be fully sponsored by IFS at no cost to you.
+                  </p>
+                </div>
+
+                <div className="mt-6 space-y-4">
+                  <div>
+                    <label htmlFor="ticket-promo-code" className="mb-1.5 block text-sm font-semibold text-gray-700">
+                      Promo Code
+                    </label>
+                    <input
+                      id="ticket-promo-code"
+                      type="text"
+                      value={promoCode}
+                      onChange={(e) => setPromoCode(e.target.value)}
+                      placeholder="Enter promo code"
+                      autoComplete="off"
+                      disabled={ticketSubmitting}
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 disabled:bg-gray-100"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="ticket-name" className="mb-1.5 block text-sm font-semibold text-gray-700">
+                      Full Name
+                    </label>
+                    <div className="relative">
+                      <User className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <input
+                        id="ticket-name"
+                        type="text"
+                        value={ticketName}
+                        onChange={(e) => setTicketName(e.target.value)}
+                        placeholder="Your full name"
+                        autoComplete="name"
+                        disabled={ticketSubmitting}
+                        className="w-full rounded-xl border border-gray-300 py-3 pl-10 pr-4 text-sm outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 disabled:bg-gray-100"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="ticket-company-name" className="mb-1.5 block text-sm font-semibold text-gray-700">
+                      Company Name
+                    </label>
+                    <input
+                      id="ticket-company-name"
+                      type="text"
+                      value={ticketCompanyName}
+                      onChange={(e) => setTicketCompanyName(e.target.value)}
+                      placeholder="Your company name"
+                      autoComplete="organization"
+                      disabled={ticketSubmitting}
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 disabled:bg-gray-100"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="ticket-referral" className="mb-1.5 block text-sm font-semibold text-gray-700">
+                      Referral
+                    </label>
+                    <input
+                      id="ticket-referral"
+                      type="text"
+                      value={ticketReferral}
+                      onChange={(e) => setTicketReferral(e.target.value)}
+                      placeholder="Who referred you? (optional)"
+                      disabled={ticketSubmitting}
+                      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 disabled:bg-gray-100"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="ticket-email" className="mb-1.5 block text-sm font-semibold text-gray-700">
+                      Email Address
+                    </label>
+                    <div className="relative">
+                      <Mail className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <input
+                        id="ticket-email"
+                        type="email"
+                        value={ticketEmail}
+                        onChange={(e) => setTicketEmail(e.target.value)}
+                        placeholder="you@example.com"
+                        autoComplete="email"
+                        disabled={ticketSubmitting}
+                        className="w-full rounded-xl border border-gray-300 py-3 pl-10 pr-4 text-sm outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 disabled:bg-gray-100"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {ticketMessage && (
+                    <div
+                      className={`flex items-start gap-3 rounded-xl border px-4 py-3 text-sm ${ticketSuccess
+                        ? 'border-green-200 bg-green-50 text-green-800'
+                        : 'border-red-200 bg-red-50 text-red-700'
+                        }`}
+                    >
+                      {ticketSuccess ? (
+                        <CheckCircle className="mt-0.5 h-5 w-5 shrink-0" />
+                      ) : (
+                        <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
+                      )}
+                      <p>{ticketMessage}</p>
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={ticketSubmitting}
+                    className="w-full rounded-xl bg-amber-500 px-5 py-3.5 text-sm font-bold text-navy-950 transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60 inline-flex items-center justify-center gap-2"
+                  >
+                    {ticketSubmitting ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Creating Your Ticket...
+                      </>
+                    ) : (
+                      <>
+                        Get My Sponsored Ticket
+                        <ArrowRight className="h-4 w-4" />
+                      </>
+                    )}
+                  </button>
+
+                  <p className="text-center text-xs text-gray-400">
+                    Your ticket will be sent to the email address you provide.
+                  </p>
+                </div>
+              </form>
+            )}
+
+            {ticketSuccess && (
+              <div className="bg-gray-100">
+                <div
+                  id="printable-ticket"
+                  className="bg-white mx-auto w-full max-w-5xl overflow-hidden"
+                >
+                  {/* Ticket Header */}
+                  <div className="bg-navy-950 px-6 py-6 text-center">
+                    <img
+                      src="/Lonestar_logo.png"
+                      alt="Lone Star Investor Forum"
+                      className="mx-auto h-16 w-auto"
+                    />
+
+                    <h3 className="mt-3 text-2xl font-bold text-white">
+                      Lone Star Investor Forum
+                    </h3>
+
+                    <p className="mt-1 text-sm text-amber-400 font-semibold">
+                      Season 1 • Audience Ticket
+                    </p>
+                  </div>
+
+                  {/* Ticket Body */}
+                  <div className="p-6 md:p-8">
+                    <div className="text-center">
+                      <p className="text-xs uppercase tracking-[0.25em] text-gray-400">
+                        Sponsored Ticket
+                      </p>
+
+                      <h4 className="mt-2 text-2xl font-bold text-navy-950">
+                        {ticketName}
+                      </h4>
+
+                      <p className="mt-2 text-sm text-gray-600">
+                        <span className="font-semibold">Company:</span> {ticketCompanyName}
+                      </p>
+
+                      <p className="mt-1 text-sm text-gray-500">
+                        {ticketEmail}
+                      </p>
+                    </div>
+
+                    {/* QR */}
+                    <div className="mt-7 flex justify-center">
+                      <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                        {generatedQrImage && (
+                          <img
+                            src={generatedQrImage}
+                            alt="Ticket QR Code"
+                            className="h-56 w-56"
+                          />
+                        )}
+                      </div>
+                    </div>
+
+                    <p className="mt-3 text-center text-xs text-gray-400">
+                      Present this QR code at the event check-in.
+                    </p>
+
+                    {/* Ticket ID */}
+                    <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-center">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                        Ticket ID
+                      </p>
+
+                      <p className="mt-1 font-mono text-lg font-bold tracking-wider text-navy-950">
+                        {generatedTicketId}
+                      </p>
+                    </div>
+
+                    {/* Event Details */}
+                    <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div className="rounded-xl bg-gray-50 p-4">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                          Date
+                        </p>
+                        <p className="mt-1 font-semibold text-navy-950">
+                          October 17, 2026
+                        </p>
+                      </div>
+
+                      <div className="rounded-xl bg-gray-50 p-4">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                          Time
+                        </p>
+                        <p className="mt-1 font-semibold text-navy-950">
+                          6 PM – 7 PM Networking | 7 PM – 9 PM Event
+                        </p>
+                      </div>
+
+                      <div className="rounded-xl bg-gray-50 p-4 sm:col-span-2">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                          Venue
+                        </p>
+                        <p className="mt-1 font-semibold text-navy-950">
+                          India House Houston
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          8888 West Bellfort, Houston, TX 77031
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Sponsor */}
+                    <div className="mt-6 border-t border-dashed border-gray-300 pt-5 text-center">
+                      <p className="text-sm text-gray-500">
+                        Ticket Price
+                      </p>
+
+                      <p className="mt-1 text-2xl font-bold text-green-600">
+                        $35
+                      </p>
+
+                      <p className="mt-1 text-sm font-semibold text-gray-600">
+                        Sponsored by IFS
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Buttons - hidden when printing */}
+                <div className="flex flex-col gap-3 p-6 sm:flex-row sm:justify-center print:hidden">
+                  <button
+                    type="button"
+                    onClick={handlePrintTicket}
+                    className="rounded-xl bg-amber-500 px-6 py-3 text-sm font-bold text-navy-950 hover:bg-amber-400 transition-colors"
+                  >
+                    Print / Save as PDF
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={resetTicketModal}
+                    className="rounded-xl bg-navy-950 px-6 py-3 text-sm font-semibold text-white hover:bg-navy-900 transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {applyOpen && <ApplicationModal onClose={() => setApplyOpen(false)} />}
       {reportsOpen && <ReportsModal onClose={() => setReportsOpen(false)} />}
