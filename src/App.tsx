@@ -747,7 +747,7 @@ export default function App() {
             <span className="h-4 w-px bg-white/30 hidden sm:block" />
             <span className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-amber-400" />
-              6:00 PM – 7:00 PM Networking <br></br> 7:00 PM – 9:00 PM Event
+              6:00 PM – 9:00 PM 
             </span>
           </div>
 
