@@ -769,7 +769,7 @@ export default function App() {
               onClick={openTicketModal}
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
             >
-              Buy Tickets
+              Purchase Audience Tickets
             </button>
             {/* <a
               href="/tickets"
