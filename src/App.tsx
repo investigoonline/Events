@@ -1182,7 +1182,7 @@ export default function App() {
                     href="mailto:info@lonestar.investigoonline.com"
                     className="hover:text-amber-400 transition-colors"
                   >
-                    info@.investigoonline.com
+                    info@investigoonline.com
                   </a>
                 </li>
 
