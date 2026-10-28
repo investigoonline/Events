@@ -3,6 +3,7 @@ import QRCode from 'qrcode';
 import { Star, ChevronDown, Users, TrendingUp, Award, ArrowRight, Menu, X, MapPin, Calendar, Clock, Mail, Phone, Globe, FileText, Ticket, CheckCircle, AlertCircle, Loader2, User } from 'lucide-react';
 import ApplicationModal from './components/ApplicationModal';
 import ReportsModal from './components/ReportsModal';
+import Highlights from './Highlights';
 
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null);
@@ -20,28 +21,28 @@ function useInView(threshold = 0.15) {
 
 const judges = [
   {
-    name: 'Senthil Kumar ',
-    title: 'Chairman and CEO, Sierra Digital',
-    bio: 'Senthil Kumar has more than 20 years of experience building enterprise technology businesses across SAP, cloud, data, and industry transformation. His approach is grounded in efficiency before hype. He focuses on technology that reduces manual work, shortens cycle times, improves control, and makes business processes easier to run. Under his leadership, Sierra Digital has developed 43+ AI agents and established the Sierra Digital AppHaus in Houston.',
-    img: '/RSK - CEO.jpg',
+    // name: 'Senthil Kumar ',
+    // title: 'Chairman and CEO, Sierra Digital',
+    // bio: 'Senthil Kumar has more than 20 years of experience building enterprise technology businesses across SAP, cloud, data, and industry transformation. His approach is grounded in efficiency before hype. He focuses on technology that reduces manual work, shortens cycle times, improves control, and makes business processes easier to run. Under his leadership, Sierra Digital has developed 43+ AI agents and established the Sierra Digital AppHaus in Houston.',
+    img: '/dummy1.png',
   },
   {
-    name: 'Pratyush Kumar',
-    title: 'Founder, FusionStak',
-    bio: 'Two-time founder with a successful exit, now General Manager of CloudGavel at Tyler Technologies. Built FusionStak into a 100-person company and created the largest electronic warrant system in the U.S., serving 250+ law enforcement agencies and 100+ courts. Active investor in founders building mission-critical software for regulated industries.',
-    img: '/Pratush_FusionStak.jpg',
+    // name: 'Pratyush Kumar',
+    // title: 'Founder, FusionStak',
+    // bio: 'Two-time founder with a successful exit, now General Manager of CloudGavel at Tyler Technologies. Built FusionStak into a 100-person company and created the largest electronic warrant system in the U.S., serving 250+ law enforcement agencies and 100+ courts. Active investor in founders building mission-critical software for regulated industries.',
+    img: '/dummy2.png',
   },
   {
-    name: 'Anuj Shah',
-    title: 'Business Leader',
-    bio: 'Anuj Shah, a successful entrepreneur and business leader with extensive experience building and scaling businesses. Having successfully managed large logistics and distribution network operations, Anuj brings valuable insights into leadership, growth strategy, and operational excellence. We are honored to have him share his perspective with our community of investors, founders, and business leaders.',
-    img: '/anuj1.jpeg',
+    // name: 'Anuj Shah',
+    // title: 'Business Leader',
+    // bio: 'Anuj Shah, a successful entrepreneur and business leader with extensive experience building and scaling businesses. Having successfully managed large logistics and distribution network operations, Anuj brings valuable insights into leadership, growth strategy, and operational excellence. We are honored to have him share his perspective with our community of investors, founders, and business leaders.',
+    img: '/dummy1.png',
   },
   {
-    name: 'Suresh Katamreddy',
-    title: 'Co-Founder & CEO, Kastech Software Solutions Group',
-    bio: 'Suresh Katamreddy is the Co-Founder & CEO of Kastech Software Solutions Group, a global technology services organization specializing in ERP, cloud, AI, cybersecurity, and digital transformation. With over 20 years of industry leadership, he has built and scaled technology businesses serving clients worldwide. As an active investor and mentor, Suresh supports innovative startups and growth-stage companies, particularly in enterprise software, AI, cloud technologies, and digital transformation initiatives.',
-    img: '/suresh_kastech.png',
+    // name: 'Suresh Katamreddy',
+    // title: 'Co-Founder & CEO, Kastech Software Solutions Group',
+    // bio: 'Suresh Katamreddy is the Co-Founder & CEO of Kastech Software Solutions Group, a global technology services organization specializing in ERP, cloud, AI, cybersecurity, and digital transformation. With over 20 years of industry leadership, he has built and scaled technology businesses serving clients worldwide. As an active investor and mentor, Suresh supports innovative startups and growth-stage companies, particularly in enterprise software, AI, cloud technologies, and digital transformation initiatives.',
+    img: '/dummy2.png',
   },
 ];
 
@@ -49,7 +50,7 @@ const features = [
   {
     icon: <TrendingUp className="w-6 h-6" />,
     title: 'Pitch Live in Houston',
-    desc: 'Finalists will present their ventures on October 17th to investors, business leaders, and a live audience — your chance to showcase your vision, gain feedback, and shine in Texas\'s business scene.',
+    desc: 'Finalists will present their ventures to investors, business leaders, and a live audience — your chance to showcase your vision, gain feedback, and shine in Texas\'s business scene.',
     img: 'https://images.pexels.com/photos/7654586/pexels-photo-7654586.jpeg?auto=compress&cs=tinysrgb&w=600',
   },
   {
@@ -101,6 +102,7 @@ const INTUIT_TICKET_URL =
 export default function App() {
   const [navScrolled, setNavScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileSeasonsOpen, setMobileSeasonsOpen] = useState(false);
   const [activeBio, setActiveBio] = useState<number | null>(null);
   const [applyOpen, setApplyOpen] = useState(false);
   const [reportsOpen, setReportsOpen] = useState(false);
@@ -340,6 +342,10 @@ export default function App() {
 
   const navLinks = ['About', 'What to Expect', 'Judges', 'Sponsors', 'Apply'];
 
+  if (window.location.pathname.replace(/\/+$/, '') === '/highlights') {
+    return <Highlights />;
+  }
+
   return (
     <div className="font-sans text-gray-900 bg-white overflow-x-hidden">
       <style>{`
@@ -455,6 +461,51 @@ export default function App() {
               </a>
 
             ))}
+
+
+            
+<div className="relative group">
+  <button
+    type="button"
+    className="flex items-center gap-1 text-white/80 hover:text-amber-400 transition-colors text-sm font-medium"
+    aria-haspopup="true"
+  >
+    Seasons
+    <svg
+      className="w-4 h-4 transition-transform group-hover:rotate-180"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="m6 9 6 6 6-6"
+      />
+    </svg>
+  </button>
+
+  <div className="absolute left-0 top-full pt-3 w-44 hidden group-hover:block group-focus-within:block z-50">
+    <div className="rounded-lg border border-white/10 bg-slate-950 shadow-xl py-2">
+      <a
+        href="/highlights"
+        className="block px-4 py-2 text-sm text-white/80 hover:text-amber-400 hover:bg-white/5 transition-colors"
+      >
+        Season 1
+      </a>
+
+      <a
+        href="/season-2"
+        className="block px-4 py-2 text-sm text-white/80 hover:text-amber-400 hover:bg-white/5 transition-colors"
+      >
+        Season 2
+      </a>
+    </div>
+  </div>
+</div>
+
+
 
           </nav>
 
@@ -641,45 +692,83 @@ export default function App() {
   </div>
 </div> */}
 
-        <div
+        {/* <div
           className={`overflow-hidden transition-all duration-300 ${navScrolled ? "max-h-0 opacity-0" : "max-h-7 opacity-100"
             }`}
         >
           <div className="bg-amber-600 text-navy-950 text-center py-1.5 font-medium text-xs md:text-sm">
             📢 <strong>Season 1 Application Deadline: September 5, 2026</strong>
           </div>
-        </div>
+        </div> */}
         {/* Mobile Drawer */}
-
         {mobileOpen && (
-
           <div className="lg:hidden bg-navy-950 border-t border-white/10 px-6 py-5 space-y-4">
-
-            {navLinks.slice(0, -1).map(link => (
-
+            {navLinks.slice(0, -1).map((link) => (
               <a
                 key={link}
                 href={`#${link.toLowerCase().replace(/\s+/g, "-")}`}
-                className="block text-white/80 hover:text-amber-400"
-                onClick={() => setMobileOpen(false)}
+                className="block py-2 text-white/80 hover:text-amber-400 transition-colors"
+                onClick={() => {
+                  setMobileOpen(false);
+                  setMobileSeasonsOpen(false);
+                }}
               >
                 {link}
               </a>
-
             ))}
 
+            <div className="space-y-2">
+              <button
+                type="button"
+                onClick={() => setMobileSeasonsOpen((open) => !open)}
+                aria-expanded={mobileSeasonsOpen}
+                aria-controls="mobile-seasons-submenu"
+                className="flex w-full items-center justify-between py-2 text-white/80 hover:text-amber-400 transition-colors"
+              >
+                <span>Seasons</span>
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform ${mobileSeasonsOpen ? 'rotate-180' : ''}`}
+                />
+              </button>
+
+              {mobileSeasonsOpen && (
+                <div id="mobile-seasons-submenu" className="ml-3 space-y-1 border-l-2 border-amber-400/50 pl-4">
+                  <a
+                    href="/highlights"
+                    onClick={() => {
+                      setMobileOpen(false);
+                      setMobileSeasonsOpen(false);
+                    }}
+                    className="block rounded-md px-3 py-3 text-white/80 hover:bg-white/5 hover:text-amber-400 transition-colors"
+                  >
+                    Season 1
+                  </a>
+                  <a
+                    href="/season-2"
+                    onClick={() => {
+                      setMobileOpen(false);
+                      setMobileSeasonsOpen(false);
+                    }}
+                    className="block rounded-md px-3 py-3 text-white/80 hover:bg-white/5 hover:text-amber-400 transition-colors"
+                  >
+                    Season 2
+                  </a>
+                </div>
+              )}
+            </div>
+
             <button
-              className="text-amber-400 font-semibold"
+              type="button"
+              className="text-amber-400 font-semibold py-2"
               onClick={() => {
                 setApplyOpen(true);
                 setMobileOpen(false);
+                setMobileSeasonsOpen(false);
               }}
             >
               Apply Now
             </button>
-
           </div>
-
         )}
 
       </header>
@@ -724,35 +813,34 @@ export default function App() {
 
           <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight">
             Lone Star<br />
-            <span className="text-amber-400">Investor Forum<br /></span><span>Season-1</span>
+            <span className="text-amber-400">Investor Forum<br /></span>
+            <span>Season-2</span>
           </h1>
 
           <p className="text-2xl md:text-3xl text-white/70 font-light">
-            Texas's Premier Entrepreneur Pitch Competition
+           Texas's Premier Entrepreneur Pitch Competition
           </p>
 
           {/* Event details */}
           <div className="flex flex-wrap items-center justify-center gap-6 mt-4 text-white/80 text-sm font-medium">
             <span className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-amber-400" />
-              October 17, 2026
+             To Be Announced
             </span>
             <span className="h-4 w-px bg-white/30 hidden sm:block" />
             <span className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-amber-400" />
-              India House Houston
-              8888 West Bellfort
-              Houston, TX 77031
+              To Be Announced
             </span>
             <span className="h-4 w-px bg-white/30 hidden sm:block" />
             <span className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-amber-400" />
-              6:00 PM – 9:00 PM 
+              To Be Announced
             </span>
           </div>
 
           <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed mt-2">
-            Ready to elevate your business? Pitch innovative ideas to top Texas investors and compete
+            Ready to elevate your business? Pitch innovative ideas to top investors and compete
             for significant funding. Applications are open for all entrepreneurs — from early-stage
             startups to high-growth ventures. Don't miss your moment to shine under the Lone Star.
           </p>
@@ -764,13 +852,13 @@ export default function App() {
             >
               Apply to Pitch <ArrowRight className="w-4 h-4" />
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={openTicketModal}
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
             >
               Purchase Audience Tickets
-            </button>
+            </button> */}
             {/* <a
               href="/tickets"
               className="px-8 py-3.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-sm rounded-full transition-all duration-200 backdrop-blur-sm"
@@ -962,14 +1050,14 @@ export default function App() {
             >
               Apply Now <ArrowRight className="w-4 h-4" />
             </button>
-            <button
+            {/* <button
               id="tickets"
               type="button"
               onClick={openTicketModal}
               className="px-8 py-3.5 bg-white/20 hover:bg-white/30 border border-navy-950/20 text-navy-950 font-semibold text-sm rounded-full transition-all duration-200"
             >
               Purchase Audience Tickets
-            </button>
+            </button> */}
 
             {/* <a
               href="/tickets"
@@ -1123,7 +1211,7 @@ export default function App() {
                 </div>
               </div>
               <p className="text-sm leading-relaxed">
-                Fueling the next generation of Texas entrepreneurs through access to capital,
+                Fueling the next generation of entrepreneurs through access to capital,
                 mentorship, and community.
               </p>
             </div>
@@ -1155,17 +1243,15 @@ export default function App() {
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-2">
                   <Calendar className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
-                  October 17, 2026
+                  To Be Announced
                 </li>
                 <li className="flex items-start gap-2">
                   <Clock className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
-                  6:00 PM – 7:00 PM Networking | 7:00 PM – 9:00 PM Event CST
+                  To Be Announced
                 </li>
                 <li className="flex items-start gap-2">
                   <MapPin className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
-                  India House Houston<br />
-                  8888 West Bellfort<br />
-                  Houston, TX 77031
+                  To Be Announced
                 </li>
               </ul>
             </div>
