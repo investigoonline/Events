@@ -992,7 +992,7 @@ export default function App() {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {judges.map((judge, i) => (
                 <div
                   key={judge.name}
@@ -1027,7 +1027,26 @@ export default function App() {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  {judges.map((judge, i) => (
+    <div
+      key={i}
+      className="group relative bg-white/5 border border-white/10 hover:border-amber-500/40 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10"
+      style={{ transitionDelay: `${i * 80}ms` }}
+    >
+      <div className="relative h-[340px] md:h-64 overflow-hidden">
+        <img
+          src={judge.img}
+          alt={`Investor panel member ${i + 1}`}
+          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent" />
+      </div>
+    </div>
+  ))}
+</div>
           </div>
         </div>
       </section>
